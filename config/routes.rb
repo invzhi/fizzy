@@ -3,7 +3,9 @@ Rails.application.routes.draw do
 
   resource :session
 
-  resources :projects
+  resources :projects do
+    resources :users, controller: "projects/users"
+  end
 
   resources :bubbles do
     resource :image, controller: "bubbles/images"

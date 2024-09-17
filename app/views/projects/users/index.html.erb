@@ -1,0 +1,7 @@
+<h1>Users on <%= @project.name %></h1>
+
+<ul>
+  <% @users.each do |user| %>
+    <li><%= user.name %> <%= link_to "X", project_user_path(@project, user), data: { turbo_method: :delete } %></li>
+  <% end %>
+</ul>

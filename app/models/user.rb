@@ -9,6 +9,7 @@ class User < ApplicationRecord
 
   has_many :accesses, dependent: :destroy
   has_many :projects, through: :accesses
+  has_many :bubbles, through: :projects
 
   normalizes :email_address, with: ->(value) { value.strip.downcase }
 
