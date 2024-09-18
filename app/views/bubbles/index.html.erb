@@ -6,10 +6,10 @@
     <% end %>
 
     <h1 class="txt-xx-large margin-none flex align-center gap-half">
-      Bubbled up
+      Bubbled up <%= @project.name %>
 
       <% if @tag %>
-        in <%= @tag.title %>
+        tagged <%= @tag.title %>
 
         <%= link_to project_bubbles_path(@project), class: "btn txt-small" do %>
           <%= image_tag "remove.svg", aria: { hidden: true }, size: 24 %>
