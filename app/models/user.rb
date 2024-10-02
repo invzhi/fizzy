@@ -8,7 +8,6 @@ class User < ApplicationRecord
   has_many :buckets, through: :accesses
   has_many :bubbles, through: :buckets
 
-
   has_many :assignments, foreign_key: :assignee_id, dependent: :destroy
   has_many :assignings, foreign_key: :assigner_id, class_name: "Assignment"
   has_many :assigned_bubbles, through: :assignments, source: :bubble
