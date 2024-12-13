@@ -48,10 +48,6 @@ class FilterTest < ActiveSupport::TestCase
     assert_empty users(:david).filters.new(bucket_ids: [ buckets(:writebook).id ]).bubbles
   end
 
-  test "saved bucket filters are destroyed after losing access" do
-    skip "figuring out if this is the behavior we want"
-  end
-
   test "turning into params" do
     expected = { indexed_by: "most_discussed", tag_ids: [ tags(:mobile).id ], assignee_ids: [ users(:jz).id ], filter_id: filters(:jz_assignments).id }
     assert_equal expected.stringify_keys, filters(:jz_assignments).to_params.to_h
