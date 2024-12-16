@@ -19,7 +19,7 @@ class BubblesControllerTest < ActionDispatch::IntegrationTest
     assert_difference "Bubble.count", 1 do
       post bucket_bubbles_url(buckets(:writebook))
     end
-    assert_redirected_to bucket_bubble_url(buckets(:writebook), Bubble.last)
+    assert_redirected_to bucket_bubble_url(buckets(:writebook), Bubble.last, editing: true)
   end
 
   test "show" do
