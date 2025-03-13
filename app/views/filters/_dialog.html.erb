@@ -40,20 +40,20 @@
         <menu class="filter__menu">
           <li class="filter__label"><strong>Sort by</strong></li>
           <li>
-            <%= label_tag "indexed_by_#{filter.default_indexed_by}", class: "btn filter__button" do %>
+            <label class="btn filter__button">
               <%= radio_button_tag "indexed_by", filter.default_indexed_by, filter.default_indexed_by?, class: "for-screen-reader" %>
               <span>Most active</span>
               <%= image_tag "close.svg", aria: { hidden: true }, size: 24 %>
-            <% end %>
+            </label>
           </li>
 
           <% Filter::INDEXES.each do |index| %>
             <li>
-              <%= label_tag "indexed_by_#{index}", class: "btn filter__button" do %>
+              <label class="btn filter__button">
                 <%= radio_button_tag "indexed_by", index, filter.indexed_by == index, class: "for-screen-reader" %>
                 <span><%= index.humanize %></span>
                 <%= image_tag "close.svg", aria: { hidden: true }, size: 24 %>
-              <% end %>
+              </label>
             </li>
           <% end %>
         </menu>
@@ -68,11 +68,11 @@
           </li>
           <% Current.user.buckets.order(:name).each do |bucket| %>
             <li>
-              <%= label_tag "bucket_ids_#{bucket.id}", class: "btn filter__button" do %>
-                <%= check_box_tag "bucket_ids[]", bucket.id, filter.buckets.include?(bucket), id: "bucket_ids_#{bucket.id}", class: "for-screen-reader" %>
+              <label class="btn filter__button">
+                <%= check_box_tag "bucket_ids[]", bucket.id, filter.buckets.include?(bucket), class: "for-screen-reader" %>
                 <span><%= bucket.name %></span>
                 <%= image_tag "close.svg", aria: { hidden: true }, size: 24 %>
-              <% end %>
+              </label>
             </li>
           <% end %>
         </menu>
@@ -81,11 +81,11 @@
           <li class="filter__label"><strong>Tagged</strong></li>
           <% Current.account.tags.order(:title).each do |tag| %>
             <li>
-              <%= label_tag "tag_ids_#{tag.id}", class: "btn filter__button" do %>
-                <%= check_box_tag "tag_ids[]", tag.id, filter.tags.include?(tag), id: "tag_ids_#{tag.id}", class: "for-screen-reader" %>
+              <label class="btn filter__button">
+                <%= check_box_tag "tag_ids[]", tag.id, filter.tags.include?(tag), class: "for-screen-reader" %>
                 <span><%= tag.hashtag %></span>
                 <%= image_tag "close.svg", aria: { hidden: true }, size: 24 %>
-              <% end %>
+              </label>
             </li>
           <% end %>
         </menu>
@@ -93,29 +93,33 @@
         <menu class="filter__menu">
           <li class="filter__label"><strong>Assigned to…</strong></li>
           <li>
-            <%= label_tag "assignment_status_unassigned", class: "btn filter__button" do %>
-              <%= check_box_tag "assignment_status", "unassigned", filter.assignment_status.unassigned?, id: "assignment_status_unassigned",
-                class: "for-screen-reader", data: { action: "filter-form#clearCategory", filter_form_name_param: "assignee_ids[],assigner_ids[]" } %>
-                <span>No one</span>
-                <%= image_tag "close.svg", aria: { hidden: true }, size: 24 %>
-              <% end %>
+            <label class="btn filter__button">
+              <%= check_box_tag "assignment_status", "unassigned", filter.assignment_status.unassigned?,
+                    class: "for-screen-reader",
+                    data: {
+                      action: "filter-form#clearCategory", 
+                      filter_form_name_param: "assignee_ids[],assigner_ids[]" } %>
+              <span>No one</span>
+              <%= image_tag "close.svg", aria: { hidden: true }, size: 24 %>
+            </label>
           </li>
           <li>
-            <%= label_tag "assignee_ids_me", class: "btn filter__button" do %>
-              <%= check_box_tag "assignee_ids[]", Current.user.id, filter.assignees.include?(Current.user), id: "assignee_ids_me",
-                class: "for-screen-reader", data: { action: "filter-form#clearCategory", filter_form_name_param: "assignment_status" } %>
-                <span>Me</span>
-                <%= image_tag "close.svg", aria: { hidden: true }, size: 24 %>
-              <% end %>
+            <label class="btn filter__button">
+              <%= check_box_tag "assignee_ids[]", Current.user.id, filter.assignees.include?(Current.user),
+                    class: "for-screen-reader",
+                    data: { action: "filter-form#clearCategory", filter_form_name_param: "assignment_status" } %>
+              <span>Me</span>
+              <%= image_tag "close.svg", aria: { hidden: true }, size: 24 %>
+            </label>
           </li>
           <% Current.account.users.active.without(Current.user).order(:name).each do |user| %>
             <li>
-              <%= label_tag "assignee_ids_#{user.id}", user.name, class: "btn filter__button" do %>
-                <%= check_box_tag "assignee_ids[]", user.id, filter.assignees.include?(user), id: "assignee_ids_#{user.id}",
-                  class: "for-screen-reader", data: { action: "filter-form#clearCategory", filter_form_name_param: "assignment_status" } %>
-                  <span><%= user.name %></span>
-                  <%= image_tag "close.svg", aria: { hidden: true }, size: 24 %>
-                <% end %>
+              <label class="btn filter__button">
+                <%= check_box_tag "assignee_ids[]", user.id, filter.assignees.include?(user), class: "for-screen-reader",
+                      data: { action: "filter-form#clearCategory", filter_form_name_param: "assignment_status" } %>
+                <span><%= user.name %></span>
+                <%= image_tag "close.svg", aria: { hidden: true }, size: 24 %>
+              </label>
             </li>
           <% end %>
         </menu>
@@ -123,21 +127,20 @@
         <menu class="filter__menu">
           <li class="filter__label"><strong>Added by…</strong></li>
           <li>
-            <%= label_tag "creator_ids_me", class: "btn filter__button" do %>
-              <%= check_box_tag "creator_ids[]", Current.user.id, filter.creators.include?(Current.user), id: "creator_ids_me",
-                class: "for-screen-reader" %>
-                <span>Me</span>
-                <%= image_tag "close.svg", aria: { hidden: true }, size: 24 %>
-              <% end %>
+            <label class="btn filter__button">
+              <%= check_box_tag "creator_ids[]", Current.user.id, filter.creators.include?(Current.user),
+                    class: "for-screen-reader" %>
+              <span>Me</span>
+              <%= image_tag "close.svg", aria: { hidden: true }, size: 24 %>
+            </label>
           </li>
           <% Current.account.users.active.without(Current.user).order(:name).each do |user| %>
             <li>
-              <%= label_tag "creator_ids_#{user.id}", class: "btn filter__button" do %>
-                <%= check_box_tag "creator_ids[]", user.id, filter.creators.include?(user), id: "creator_ids_#{user.id}",
-                  class: "for-screen-reader" %>
-                  <span><%= user.name %></span>
-                  <%= image_tag "close.svg", aria: { hidden: true }, size: 24 %>
-                <% end %>
+              <label class="btn filter__button">
+                <%= check_box_tag "creator_ids[]", user.id, filter.creators.include?(user), class: "for-screen-reader" %>
+                <span><%= user.name %></span>
+                <%= image_tag "close.svg", aria: { hidden: true }, size: 24 %>
+              </label>
             </li>
           <% end %>
         </menu>
@@ -149,11 +152,11 @@
 
             <% workflow.stages.order(:name).each do |stage| %>
               <li>
-                <%= label_tag "stage_ids_#{stage.id}", class: "btn filter__button" do %>
-                  <%= check_box_tag "stage_ids[]", stage.id, filter.stages.include?(stage), id: "stage_ids_#{stage.id}", class: "for-screen-reader" %>
+                <label class="btn filter__button">
+                  <%= check_box_tag "stage_ids[]", stage.id, filter.stages.include?(stage), class: "for-screen-reader" %>
                   <span><%= stage.name %></span>
                   <%= image_tag "close.svg", aria: { hidden: true }, size: 24 %>
-                <% end %>
+                </label>
               </li>
             <% end %>
           <% end %>
