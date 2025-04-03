@@ -1,5 +1,5 @@
 import { Controller } from "@hotwired/stimulus"
-import { debounce } from "helpers/timing_helpers"
+import { debounce, nextFrame } from "helpers/timing_helpers"
 
 export default class extends Controller {
   static targets = ["input"]
@@ -10,7 +10,7 @@ export default class extends Controller {
   }
 
   connect() {
-    this.#restoreContent()
+    this.restoreContent()
   }
 
   submit({ detail: { success } }) {
@@ -28,18 +28,20 @@ export default class extends Controller {
     }
   }
 
-  // Private
-
-  #clear() {
-    localStorage.removeItem(this.keyValue)
-  }
-
-  #restoreContent() {
+  async restoreContent() {
+    await nextFrame()
     const savedContent = localStorage.getItem(this.keyValue)
+
     if (savedContent) {
       this.inputTarget.value = savedContent
       this.#triggerChangeEvent(savedContent)
     }
+  }
+
+  // Private
+
+  #clear() {
+    localStorage.removeItem(this.keyValue)
   }
 
   #triggerChangeEvent(newValue) {

@@ -5,11 +5,41 @@
       <span>Un-do</span>
     <% end %>
   <% else %>
-    <%= button_to bucket_bubble_pop_path(bubble.bucket, bubble), class: "btn borderless" do %>
-      <span>Mark as done</span>
-    <% end %>
+    <div class="flex-inline center position-relative" data-controller="dialog" data-action="keydown.esc->dialog#close click@document->dialog#closeOnClickOutside">
+      <button class="btn borderless" data-action="click->dialog#open:stop">
+        <span>Close as…</span>
+      </button>
+
+      <dialog class="popup panel flex-column align-start gap-half fill-white shadow" style="--row-gap: 0.2em;"
+          aria-label="In stage…" aria-description="In stage…"
+          data-dialog-target="dialog" data-action="turbo:before-cache@document->dialog#close">
+        <strong class="popup__title margin-block-start-half pad-inline-half">Close as…</strong>
+        <%= button_to bucket_bubble_pop_path(bubble.bucket, bubble), class: "btn popup__item full-width", form_class: "full-width" do %>
+          <span class="overflow-ellipsis">Completed</span>
+        <% end %>
+        <%= button_to bucket_bubble_pop_path(bubble.bucket, bubble), class: "btn popup__item full-width", form_class: "full-width" do %>
+          <span class="overflow-ellipsis">Duplicate</span>
+        <% end %>
+        <%= button_to bucket_bubble_pop_path(bubble.bucket, bubble), class: "btn popup__item full-width", form_class: "full-width" do %>
+          <span class="overflow-ellipsis">Maybe later</span>
+        <% end %>
+        <%= button_to bucket_bubble_pop_path(bubble.bucket, bubble), class: "btn popup__item full-width", form_class: "full-width" do %>
+          <span class="overflow-ellipsis">Working as intended</span>
+        <% end %>
+
+        <% if bubble.stage.present? %>
+          <%= button_to bucket_bubble_stagings_path(bubble.bucket, bubble, stage_id: ""), method: :post, class: "btn popup__item full-width" do %>
+            <span class="overflow-ellipsis">Move back to Considering</span>
+          <% end %>
+        <% end %>
+      </dialog>
+    </div>
     <span class="card__pop-message">
-      Auto-closes <%= local_datetime_tag(bubble.auto_pop_at, style: :indays) %>.
+      <% if bubble.stage.present? %>
+        Returns to <em>Considering</em> if no activity <%= local_datetime_tag(bubble.auto_pop_at, style: :indays) %>.
+      <% else %>
+        Auto-closes if no activity <%= local_datetime_tag(bubble.auto_pop_at, style: :indays) %>.
+      <% end %>
     </span>
   <% end %>
 </div>

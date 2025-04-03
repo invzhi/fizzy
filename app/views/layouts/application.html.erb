@@ -12,6 +12,8 @@
     <%= csp_meta_tag %>
     <%= tag.meta name: "current-user-id", content: Current.user.id if Current.user %>
 
+    <% turbo_refreshes_with method: :morph, scroll: :preserve %>
+
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
 
@@ -47,7 +49,7 @@
       <% if Current.user %>
         <%= render "notifications/tray" %>
         <%= render "bubbles/pins/tray" %>
-        <%= turbo_frame_tag "terminal", src: terminal_path %>
+        <%= turbo_frame_tag "terminal", src: terminal_path, data: { turbo_permanent: true } %>
       <% end %>
     </footer>
 

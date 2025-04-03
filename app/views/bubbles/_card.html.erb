@@ -30,7 +30,14 @@
         <% end %>
       </div>
 
-      <%= turbo_frame_tag dom_id(bubble, :stage_picker), src: new_bucket_bubble_stage_picker_path(bubble.bucket, bubble) unless (previewing_card? && bubble.popped?) %>
+      <%= turbo_frame_tag dom_id(bubble, :stage_picker), src: new_bucket_bubble_stage_picker_path(bubble.bucket, bubble), refresh: :morph unless (previewing_card? && bubble.popped?) %>
+
+      <% if bubble.stage.nil? %>
+        <%= button_to bucket_bubble_stagings_path(bubble.bucket, bubble, stage_id: bubble.bucket&.workflow&.stages&.first), method: :post, class: "card__move-button card__hide-on-index btn btn--reversed" do %>
+          <span class="txt-nowrap">Move to Doing</span>
+          <%= icon_tag "arrow-right" %>
+        <% end %>
+      <% end %>
     </div>
 
     <footer class="card__footer full-width flex align-start gap">

@@ -51,32 +51,19 @@
       <% end %>
     </div>
 
-    
+
     <% if @bubble.published? %>
       <div class="card__actions card__actions--right flex flex-column gap-half">
-        <%= turbo_frame_tag dom_id(@bubble, :watch), src: bucket_bubble_watch_path(@bubble.bucket, @bubble) %>
-        <%= turbo_frame_tag dom_id(@bubble, :pin), src: bucket_bubble_pin_path(@bubble.bucket, @bubble) %>
+        <%= turbo_frame_tag dom_id(@bubble, :watch), src: bucket_bubble_watch_path(@bubble.bucket, @bubble), refresh: :morph %>
+        <%= turbo_frame_tag dom_id(@bubble, :pin), src: bucket_bubble_pin_path(@bubble.bucket, @bubble), refresh: :morph %>
       </div>
     <% end %>
   </div>
 
   <% unless @bubble.drafted? || @bubble.creating? %>
-    <% if @bubble.stage.present? %>
-      <div class="card__actions-wrapper">
-        <%= render "bubbles/pop_toggle", bubble: @bubble %>
-      </div>
-    <% else %>
-      <div class="card__actions-wrapper">
-        <div class="card__actions-container center border-radius flex-inline align-center justify-center gap" style="--bubble-color: <%= @bubble.color %>">
-          <%= button_to bucket_bubble_stagings_path(@bubble.bucket, @bubble, stage_id: @bubble.bucket&.workflow&.stages&.first), method: :post, class: "btn borderless" do %>
-            <span>We’re doing this</span>
-          <% end %>
-          <%= button_to bucket_bubble_pop_path(@bubble.bucket, @bubble), class: "btn borderless" do %>
-            <span>Not now</span>
-          <% end %>
-        </div>
-      </div>
-    <% end %>
+    <div class="card__actions-wrapper">
+      <%= render "bubbles/pop_toggle", bubble: @bubble %>
+    </div>
   <% end %>
 
   <% if @bubble.published? %>
@@ -90,12 +77,12 @@
 
         <div class="comment__content flex-inline flex-column full-width">
           <div class="comment__body txt-align-start">
-            <form data-controller="outlet-auto-save paste" 
+            <form data-controller="outlet-auto-save paste"
                 class="flex flex-column gap full-width"
                 data-outlet-auto-save-auto-save-outlet="#bubble_form"
                 data-action="paste->paste#pasteFiles">
-              <%= tag.house_md @bubble.draft_comment, name: "bubble[draft_comment]", class: "input comment__input", 
-                    form: "bubble_form", 
+              <%= tag.house_md @bubble.draft_comment, name: "bubble[draft_comment]", class: "input comment__input",
+                    form: "bubble_form",
                     placeholder: new_comment_placeholder(@bubble),
                     data: { action: "house-md:change->outlet-auto-save#change focusout->outlet-auto-save#submit", uploads_url: uploads_url(format: "json") } %>
             </form>

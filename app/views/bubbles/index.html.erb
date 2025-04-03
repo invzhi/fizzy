@@ -1,6 +1,5 @@
 <% @page_title = @filter.summary %>
 
-<% turbo_refreshes_with method: :morph, scroll: :preserve %>
 <%= render "filters/broadcasts", filter: @filter %>
 
 <% content_for :header do %>

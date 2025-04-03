@@ -107,7 +107,11 @@
     position: relative;
     z-index: 0;
 
-    .btn {
+    &:has(dialog[open]) {
+      z-index: 1;
+    }
+
+    .btn:not(.popup__item, .btn--plain) {
       --btn-background: var(--bubble-color);
       --btn-color: var(--color-ink-reversed);
     }
@@ -356,6 +360,10 @@
     }
   }
 
+  .card__move-button {
+    --btn-background: color-mix(in srgb, var(--bubble-color) 40%, var(--color-ink));
+  }
+
   .card__stages {
     flex: 1 1 25%;
   }
@@ -450,9 +458,9 @@
     font-size: var(--text-rel-large);
     font-weight: 900;
     text-shadow:
-    -2px -2px 0 var(--bubble-color),
+     -2px -2px 0 var(--bubble-color),
       2px -2px 0 var(--bubble-color),
-    -2px 2px 0 var(--bubble-color),
+     -2px 2px 0 var(--bubble-color),
       2px 2px 0 var(--bubble-color);
   }
 }
