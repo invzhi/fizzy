@@ -1,5 +1,5 @@
 <% presenter = CollectionFilterPresenter.new(@collections, params, cookies) %>
-<div class="position-relative max-width margin-block-end-half"
+<div class="max-width margin-block-end-half"
 		data-controller="dialog" data-action="keydown.esc->dialog#close click@document->dialog#closeOnClickOutside">
 	<button class="events__filter-btn input input--select flex-inline center min-width max-width txt-small" data-action="click->dialog#open:stop">
 		<span class="overflow-ellipsis center">
@@ -7,22 +7,37 @@
 		</span>
 	</button>
 
-	<dialog class="events__popup popup panel flex-column full-width align-start gap-half fill-white shadow"
+	<dialog class="events__popup popup popup--animated panel flex-column full-width align-start gap-half fill-white shadow"
 				style="z-index: 5;" data-dialog-target="dialog" data-action="turbo:before-cache@document->dialog#close">
-		<strong class="popup__title margin-block-start-half pad-inline-half txt-nowrap">Filter by Collection…</strong>
+		<div class="flex align-center full-width gap-half">
+			<span class="btn borderless" style="pointer-events: none; --icon-size: 1.3em; --btn-padding: 0 0.6em 0 0.3em;">
+				<%= icon_tag "filter" %>
+			</span>
+			<strong class="popup__title txt-medium">Collections</strong>
+		</div>
+
 		<%= form_with url: events_path, method: :get, class: "flex flex-column full-width popup__list",
 					data: { controller: "form" } do |form| %>
-			<%= link_to "Show everything", events_path(clear_filter: true), class: "btn popup__item txt-nowrap" %>
+			<%#= link_to "Show everything", events_path(clear_filter: true), class: "btn popup__item txt-nowrap" %>
 			<% @collections.each do |collection| %>
-				<div class="btn popup__item">
-					<%= form.check_box "collection_ids[]", {
-						checked: (params[:collection_ids] || cookies[:collection_filter]&.split(","))&.include?(collection.id.to_s),
-						data: { action: "change->form#submit" },
-						include_hidden: false,
-					}, collection.id %>
+				<div class="popup__group flex align-center full-width gap-half overflow-ellipsis">
+					<div class="btn txt-xx-small">
+						<%= form.check_box "collection_ids[]", {
+							checked: (params[:collection_ids] || cookies[:collection_filter]&.split(","))&.include?(collection.id.to_s),
+							data: { action: "change->form#submit" },
+							include_hidden: false,
+						}, collection.id %>
 
-					<%= form.label "collection_ids[]", collection.name, for: dom_id(collection, :filter), class: "overflow-ellipsis" %>
-					<%= icon_tag "check", class: "checked flex-item-justify-end" %>
+						<span class="for-screen-reader">
+							Toggle filter for <%= collection.name %>
+						</span>
+						<%= icon_tag "check", size: 18, class: "checked flex-item-justify-end" %>
+					</div>
+
+					<%= link_to cards_path(collection_ids: [ collection ]), class: "btn popup__item flex-item-grow justify-space-between" do %>
+						<span class="overflow-ellipsis flex-item-grow"><%= collection.name %></span>
+						<span class="translucent"> ›</span>
+					<% end %>
 				</div>
 			<% end %>
 		<% end %>

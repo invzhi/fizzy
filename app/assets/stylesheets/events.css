@@ -61,9 +61,10 @@
   }
 
   .events__popup {
-    .panel:is(&) {
-      max-block-size: calc(100dvh - (2 * var(--block-space-double)));
-      max-inline-size: calc(100dvw - (2 * var(--block-space-double)));
+    margin-block-start: var(--block-space-double);
+
+    .events__index-header:has(&) {
+      position: relative;
     }
 
     #header:has(&) {

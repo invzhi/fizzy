@@ -19,6 +19,7 @@
 
   .popup__group {
     background: var(--color-subtle-light);
+    max-inline-size: 100%;
     padding-inline-start: var(--inline-space-half);
     
     @media (any-hover: hover) {
@@ -37,7 +38,10 @@
     --hover-size: 0;
     --outline-color: transparent;
 
+    flex: 1 1 auto;
     justify-content: start;
+    max-inline-size: 100%;
+    text-align: start;
 
     &::after {
       border-radius: var(--btn-border-radius);

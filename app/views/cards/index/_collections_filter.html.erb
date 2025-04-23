@@ -5,7 +5,7 @@
   <% end %>
 
   <% Current.user.collections.order(:name).each do |collection| %>
-    <div class="popup__group flex align-center full-width gap-half">
+    <div class="popup__group flex align-center gap-half overflow-ellipsis">
       <div class="btn txt-xx-small">
         <%= form.check_box "collection_ids[]", {
               checked: filter.collections.include?(collection),
@@ -19,7 +19,7 @@
         <%= icon_tag "check", size: 18, class: "checked flex-item-justify-end" %>
       </div>
 
-      <%= link_to cards_path(collection_ids: [ collection ]), class: "btn popup__item flex-item-grow justify-space-between" do %>
+      <%= link_to cards_path(collection_ids: [ collection ]), class: "btn popup__item justify-space-between" do %>
         <span class="overflow-ellipsis flex-item-grow"><%= collection.name %></span>
         <span class="translucent"> ›</span>
       <% end %>
