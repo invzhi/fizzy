@@ -9,6 +9,8 @@ class Event < ApplicationRecord
 
   after_create -> { eventable.event_was_created(self) }
 
+  delegate :card, to: :eventable
+
   def action
     super.inquiry
   end

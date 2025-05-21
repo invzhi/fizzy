@@ -31,6 +31,10 @@ class Card < ApplicationRecord
     [ super, collection.name ].compact.join("/")
   end
 
+  def card
+    self
+  end
+
   private
     def set_default_title
       self.title = "Untitled" if title.blank?

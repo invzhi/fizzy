@@ -66,15 +66,10 @@ module NotificationsHelper
     end
 
     def notification_closed?(notification)
-      card_for_notification(notification).closed?
+      notification.card.closed?
     end
 
     def notification_color(notification)
-      card_for_notification(notification).color
-    end
-
-    def card_for_notification(notification)
-      eventable = notification.source.eventable
-      eventable.respond_to?(:card) ? eventable.card : eventable
+      notification.card.color
     end
 end

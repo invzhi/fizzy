@@ -7,6 +7,8 @@ class Mention < ApplicationRecord
 
   after_create_commit :watch_source_by_mentionee
 
+  delegate :card, to: :source
+
   def self_mention?
     mentioner == mentionee
   end

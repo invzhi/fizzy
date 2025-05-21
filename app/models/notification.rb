@@ -10,6 +10,7 @@ class Notification < ApplicationRecord
   after_create_commit :broadcast_unread
 
   delegate :notifiable_target, to: :source
+  delegate :card, to: :source
 
   def self.read_all
     update!(read_at: Time.current)
