@@ -27,7 +27,11 @@ class User::DayTimeline
 
   private
     def filtered_events
-      @filtered_events ||= Event.where(collection: collections)
+      @filtered_events ||= begin
+        events = Event.where(collection: collections)
+        events = events.where(creator_id: filter.creators.ids) if filter.creators.present?
+        events
+      end
     end
 
     def collections
