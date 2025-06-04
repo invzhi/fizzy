@@ -7,7 +7,7 @@ module Card::Entropy
   included do
     scope :entropic_by, ->(period_name) do
       left_outer_joins(collection: :entropy_configuration)
-        .where("last_active_at <= DATETIME('now', '-' || COALESCE(entropy_configurations.#{period_name}, (?)) || ' seconds')",
+        .where("last_active_at <= DATETIME('now', '-' || COALESCE(entropy_configurations.#{period_name}, ?) || ' seconds')",
           Entropy::Configuration.default.public_send(period_name))
     end
 
