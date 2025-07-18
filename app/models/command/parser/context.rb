@@ -62,6 +62,9 @@ class Command::Parser::Context
     user.filters.from_params(params.permit(*Filter::Params::PERMITTED_PARAMS).reverse_merge(**FilterScoped::DEFAULT_PARAMS))
   end
 
+  def candidate_stages
+    Workflow::Stage.where(workflow_id: cards.joins(:collection).select("collections.workflow_id").distinct)
+  end
   private
     attr_reader :controller, :action, :params
 
@@ -87,9 +90,5 @@ class Command::Parser::Context
       @controller = route[:controller]
       @action = route[:action]
       @params =  ActionController::Parameters.new(Rack::Utils.parse_nested_query(uri.query).merge(route.except(:controller, :action)))
-    end
-
-    def candidate_stages
-      Workflow::Stage.where(workflow_id: cards.joins(:collection).select("collections.workflow_id").distinct)
     end
 end

@@ -44,6 +44,14 @@ class Command::Ai::TranslatorTest < ActionDispatch::IntegrationTest
     assert_command({ context: { indexed_by: "stalled" } }, "stagnated cards")
   end
 
+  vcr_record!
+
+
+  test "filter by stage" do
+    assert_command({ context: { stage_ids: [ "uphill" ] } }, "cards in uphill")
+    assert_command({ context: { stage_ids: [ "On Hold" ] } }, "on hold cards")
+  end
+
   test "filter by card id" do
     assert_command({ context: { card_ids: [ 123 ] } }, "card 123")
     assert_command({ context: { card_ids: [ 123, 456 ] } }, "card 123, 456")
@@ -63,7 +71,9 @@ class Command::Ai::TranslatorTest < ActionDispatch::IntegrationTest
   end
 
   test "filter by collections" do
-    assert_command({ context: { collection_ids: [ "writebook" ] } }, "writebook collection")
+    assert_command({ context: { collection_ids: [ "Writebook" ] } }, "writebook collection")
+    assert_command({ context: { collection_ids: [ "basecamp 5" ] } }, "basecamp 5 collection")
+    assert_command({ context: { collection_ids: [ "Writebook" ] } }, "writebook")
   end
 
   test "closing soon and falling back soon" do
@@ -111,8 +121,8 @@ class Command::Ai::TranslatorTest < ActionDispatch::IntegrationTest
   end
 
   test "assign stages to card" do
-    assert_command({ commands: [ "/stage in progress" ] }, "move to stage in progress")
-    assert_command({ commands: [ "/stage in progress" ] }, "move to in progress")
+    assert_command({ commands: [ "/stage In progress" ] }, "move to stage in progress")
+    assert_command({ commands: [ "/stage In progress" ] }, "move to in progress")
   end
 
   test "visit screens" do
