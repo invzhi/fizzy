@@ -192,11 +192,13 @@
   }
 
   .card-perma__notch--bottom {
+    --half-btn-height: 1.25rem;
+
     grid-area: notch-bottom;
 
-    /* Translate the buttons instead of the container to allow for wrapping */
-    .btn {
-      translate: 0 -50%;
+    /* Overlap the card BG by half the button height */
+    &:has(.btn) {
+      translate: 0 calc(-1 * var(--half-btn-height));
     }
 
     &:has([open]) {
@@ -227,6 +229,5 @@
 
   .card-perma__closure-message {
     color: var(--card-color);
-    translate: 0 -100%;
   }
 }
