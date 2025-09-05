@@ -9,7 +9,7 @@ module User::Highlights
     def generate_all_weekly_highlights
       # We're not interested in parallelizing individual generation. Better for AI quota limits and, also,
       # most summaries will be reused for users accessing the same collections.
-      find_each(&:generate_weekly_highlights)
+      active.find_each(&:generate_weekly_highlights)
     end
   end
 
