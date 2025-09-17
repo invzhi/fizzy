@@ -1,4 +1,4 @@
 <%= event_action_sentence(@event) %>
 <% if @event.eventable %>
-  <%= link_to "See more", @event.eventable %>
+— <%= link_to "Show more", polymorphic_url(@event.eventable) %>
 <% end %>
