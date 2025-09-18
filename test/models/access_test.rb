@@ -15,11 +15,12 @@ class AccessTest < ActiveSupport::TestCase
     end
   end
 
-  test "notifications are destroyed when access is lost" do
+  test "event notifications are destroyed when access is lost" do
     kevin = users(:kevin)
     collection = collections(:writebook)
 
-    assert kevin.notifications.count > 0
+    # make sure we have test coverage for both cards and comments
+    assert kevin.notifications.map(&:source).map(&:eventable_type).uniq.sort == [ "Card", "Comment" ]
 
     notifications_to_be_destroyed = kevin.notifications.select do |notification|
       notification.card&.collection == collection
@@ -43,7 +44,8 @@ class AccessTest < ActiveSupport::TestCase
     david = users(:david)
     collection = collections(:writebook)
 
-    assert david.mentions.count > 0
+    # make sure we have test coverage for both cards and comments
+    assert david.mentions.map(&:source_type).uniq.sort == [ "Card", "Comment" ]
 
     mentions_to_be_destroyed = david.mentions.select do |mention|
       mention.card&.collection == collection

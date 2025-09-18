@@ -1,6 +1,6 @@
 require "test_helper"
 
-class CollectionTest < ActiveSupport::TestCase
+class Collection::AccessibleTest < ActiveSupport::TestCase
   test "revising access" do
     collections(:writebook).update! all_access: false
 
