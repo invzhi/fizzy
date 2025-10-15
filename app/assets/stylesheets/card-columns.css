@@ -229,6 +229,7 @@
         transition: opacity 300ms ease-in-out;
         opacity: 0;
 
+        &:focus-visible,
         .cards:hover & {
           opacity: 1;
         }
