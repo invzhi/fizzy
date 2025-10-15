@@ -7,7 +7,7 @@
       <% end %>
     </div>
   <% else %>
-    <%= button_to card_closure_path(card, reason: "Done"), class: "btn borderless" do %>
+    <%= button_to card_closure_path(card), class: "btn borderless" do %>
       <span class="overflow-ellipsis">Mark as Done</span>
     <% end %>
     <% if card.entropic? && card.open? %>

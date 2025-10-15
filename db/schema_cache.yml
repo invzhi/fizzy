@@ -133,6 +133,16 @@ columns:
     default_function:
     collation:
     comment:
+  - !ruby/object:ActiveRecord::ConnectionAdapters::SQLite3::Column
+    auto_increment:
+    name: setup_status
+    cast_type: *7
+    sql_type_metadata: *8
+    'null': true
+    default:
+    default_function:
+    collation:
+    comment:
   - *9
   action_text_rich_texts:
   - !ruby/object:ActiveRecord::ConnectionAdapters::SQLite3::Column
@@ -534,34 +544,10 @@ columns:
     collation:
     comment:
   - *20
-  closure_reasons:
-  - *5
-  - *6
-  - !ruby/object:ActiveRecord::ConnectionAdapters::SQLite3::Column
-    auto_increment:
-    name: label
-    cast_type: *7
-    sql_type_metadata: *8
-    'null': true
-    default:
-    default_function:
-    collation:
-    comment:
-  - *9
   closures:
   - *23
   - *5
   - *6
-  - !ruby/object:ActiveRecord::ConnectionAdapters::SQLite3::Column
-    auto_increment:
-    name: reason
-    cast_type: *7
-    sql_type_metadata: *8
-    'null': false
-    default:
-    default_function:
-    collation:
-    comment:
   - *9
   - *25
   collection_publications:
@@ -875,6 +861,40 @@ columns:
     default_function:
     collation:
     comment:
+  integrations:
+  - *5
+  - !ruby/object:ActiveRecord::ConnectionAdapters::SQLite3::Column
+    auto_increment:
+    name: data
+    cast_type: *15
+    sql_type_metadata: *16
+    'null': true
+    default:
+    default_function:
+    collation:
+    comment:
+  - *6
+  - !ruby/object:ActiveRecord::ConnectionAdapters::SQLite3::Column
+    auto_increment:
+    name: owner_id
+    cast_type: *3
+    sql_type_metadata: *4
+    'null': false
+    default:
+    default_function:
+    collation:
+    comment:
+  - !ruby/object:ActiveRecord::ConnectionAdapters::SQLite3::Column
+    auto_increment:
+    name: type
+    cast_type: *7
+    sql_type_metadata: *8
+    'null': true
+    default:
+    default_function:
+    collation:
+    comment:
+  - *9
   mentions:
   - *5
   - *6
@@ -1466,7 +1486,6 @@ primary_keys:
   card_not_nows: id
   cards: id
   closers_filters:
-  closure_reasons: id
   closures: id
   collection_publications: id
   collections: id
@@ -1480,6 +1499,7 @@ primary_keys:
   events: id
   filters: id
   filters_tags:
+  integrations: id
   mentions: id
   notification_bundles: id
   notifications: id
@@ -1520,7 +1540,6 @@ data_sources:
   card_not_nows: true
   cards: true
   closers_filters: true
-  closure_reasons: true
   closures: true
   collection_publications: true
   collections: true
@@ -1534,6 +1553,7 @@ data_sources:
   events: true
   filters: true
   filters_tags: true
+  integrations: true
   mentions: true
   notification_bundles: true
   notifications: true
@@ -2063,7 +2083,6 @@ indexes:
     nulls_not_distinct:
     comment:
     valid: true
-  closure_reasons: []
   closures:
   - !ruby/object:ActiveRecord::ConnectionAdapters::IndexDefinition
     table: closures
@@ -2441,6 +2460,23 @@ indexes:
     unique: false
     columns:
     - tag_id
+    lengths: {}
+    orders: {}
+    opclasses: {}
+    where:
+    type:
+    using:
+    include:
+    nulls_not_distinct:
+    comment:
+    valid: true
+  integrations:
+  - !ruby/object:ActiveRecord::ConnectionAdapters::IndexDefinition
+    table: integrations
+    name: index_integrations_on_owner_id
+    unique: false
+    columns:
+    - owner_id
     lengths: {}
     orders: {}
     opclasses: {}
@@ -3197,4 +3233,4 @@ indexes:
     nulls_not_distinct:
     comment:
     valid: true
-version: 20251015123003
+version: 20251015205212
