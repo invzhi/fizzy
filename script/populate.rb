@@ -1,4 +1,4 @@
-require_relative "../../config/environment"
+require_relative "../config/environment"
 require "faker"
 
 CARDS_COUNT = ARGV.first&.to_i || 10_000
