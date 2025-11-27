@@ -25,6 +25,7 @@ class Account::Seeder
       # Playground Board
       # ---------------
       playground = account.boards.create! name: "Playground", creator: creator, all_access: true
+      playground.update! auto_postpone_period: 365.days
 
       # Cards
       playground.cards.create! creator: creator, title: "Finally, watch this Fizzy orientation video", status: "published", description: <<~HTML
