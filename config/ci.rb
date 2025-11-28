@@ -13,6 +13,7 @@ CI.run do
   step "Security: Gem audit", "bin/bundler-audit check --update"
   step "Security: Importmap audit", "bin/importmap audit"
   step "Security: Brakeman audit", "bin/brakeman --quiet --no-pager --exit-on-warn --exit-on-error"
+  step "Security: Gitleaks audit", "bin/gitleaks-audit"
 
   if Fizzy.saas?
     step "Tests: SaaS", "#{SAAS_ENV} bin/rails test:all"
