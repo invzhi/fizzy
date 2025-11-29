@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.2].define(version: 2025_11_27_000001) do
+ActiveRecord::Schema[8.2].define(version: 2025_11_29_110120) do
   create_table "accesses", id: :uuid, force: :cascade do |t|
     t.datetime "accessed_at"
     t.uuid "account_id", null: false
@@ -315,6 +315,7 @@ ActiveRecord::Schema[8.2].define(version: 2025_11_27_000001) do
     t.datetime "created_at", null: false
     t.datetime "expires_at", null: false
     t.uuid "identity_id"
+    t.integer "purpose", null: false
     t.datetime "updated_at", null: false
     t.index ["code"], name: "index_magic_links_on_code", unique: true
     t.index ["expires_at"], name: "index_magic_links_on_expires_at"
