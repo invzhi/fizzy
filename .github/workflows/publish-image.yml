@@ -34,9 +34,6 @@ jobs:
           - runner: ubuntu-latest
             platform: linux/amd64
             arch: amd64
-          - runner: ubuntu-24.04-arm
-            platform: linux/arm64
-            arch: arm64
     env:
       REGISTRY: ghcr.io
       IMAGE_NAME: ${{ github.repository }}
@@ -173,13 +170,11 @@ jobs:
               docker buildx imagetools create \
                 --tag "$tag" \
                 --annotation "index:org.opencontainers.image.description=${IMAGE_DESCRIPTION}" \
-                "${src_tag}-amd64" \
-                "${src_tag}-arm64"
+                "${src_tag}-amd64"
             else
               docker buildx imagetools create \
                 --tag "$tag" \
-                "${src_tag}-amd64" \
-                "${src_tag}-arm64"
+                "${src_tag}-amd64"
             fi
           done <<< "$tags"
 
