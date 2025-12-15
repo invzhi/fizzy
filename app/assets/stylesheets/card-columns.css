@@ -223,6 +223,7 @@
       /* Use the rest of the column height for scrolling */
       @media (max-width: 639px) {
         flex: 1;
+        padding-inline: calc(var(--column-padding) / 4);
       }
     }
 
