@@ -44,8 +44,8 @@ File.write(LOG_FILE, "")
 # Start stripe listen in background
 pid = spawn(
   "stripe", "listen", "--forward-to", "localhost:3006/stripe/webhooks",
-  out: [LOG_FILE, "a"],
-  err: [LOG_FILE, "a"]
+  out: [ LOG_FILE, "a" ],
+  err: [ LOG_FILE, "a" ]
 )
 Process.detach(pid)
 

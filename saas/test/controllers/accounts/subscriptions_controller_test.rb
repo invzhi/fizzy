@@ -43,5 +43,4 @@ class Account::SubscriptionsControllerTest < ActionDispatch::IntegrationTest
     post account_subscription_path
     assert_response :forbidden
   end
-
 end
