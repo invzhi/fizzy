@@ -42,7 +42,7 @@ module Authentication
     end
 
     def require_authentication
-      resume_session || authenticate_by_bearer_token || request_authentication
+      resume_session || authenticate_by_bearer_token || authenticate_by_auth_proxy_header || request_authentication
     end
 
     def resume_session
@@ -60,6 +60,25 @@ module Authentication
         authenticate_or_request_with_http_token do |token|
           if identity = Identity.find_by_permissable_access_token(token, method: request.method)
             Current.identity = identity
+          end
+        end
+      end
+    end
+
+    def authenticate_by_auth_proxy_header
+      header = ENV["HTTP_AUTH_PROXY_HEADER"]
+      email_domain = ENV["HTTP_AUTH_PROXY_EMAIL_DOMAIN"]
+      if header.present? && email_domain.present?
+        if (username = request.headers[header]).present?
+          email_address = "#{username}@#{email_domain}"
+          identity = Identity.find_or_create_by!(email_address: email_address)
+          Current.identity = identity
+          start_new_session_for identity
+
+          if identity.previously_new_record?
+            redirect_to new_signup_completion_path
+          else
+            redirect_to after_authentication_url
           end
         end
       end
