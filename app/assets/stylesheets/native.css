@@ -35,6 +35,15 @@
       margin-block-start: 0;
     }
 
+    .card-perma__bg {
+      padding-block: clamp(0.25rem, 2vw, var(--padding-block));
+    }
+
+    .card-perma__closure-message {
+      margin-block: var(--block-space);
+      translate: unset;
+    }
+
     /* Search
     /* ------------------------------------------------------------------------ */
 
