@@ -127,12 +127,12 @@
 
       @media (max-width: 639px) {
         border: 1px solid var(--card-color);
-        border-radius: 0.25em;
+        border-radius: calc(0.2em + 3px);
         flex-direction: row;
         gap: 0;
         overflow: auto;
         max-inline-size: 100%;
-        padding: 0;
+        padding: 3px;
         position: relative;
         white-space: nowrap;
 
@@ -142,7 +142,7 @@
           min-block-size: 2.5em;
         }
 
-        & > form + form:not(:has(.card__column-name--current)) {
+        & > form:not(:has(.card__column-name--current)) + form:not(:has(.card__column-name--current)) {
           box-shadow: -1px 0 0 0 var(--color-container);
         }
       }
@@ -150,7 +150,6 @@
 
     .card__column-name {
       @media (max-width: 639px) {
-        --btn-border-radius: 0;
         justify-content: center;
       }
     }
