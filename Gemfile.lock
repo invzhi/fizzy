@@ -1,8 +1,8 @@
 GIT
   remote: https://github.com/basecamp/lexxy
-  revision: 4f0fc4d5773bc6892de70f175440c259974c12a7
+  revision: 4bcf8d0213971560e90734493f8bd835addc3642
   specs:
-    lexxy (0.7.0.beta)
+    lexxy (0.7.4.beta)
       rails (>= 8.0.2)
 
 GIT
@@ -355,7 +355,6 @@ GEM
       erb
       psych (>= 4.0.0)
       tsort
-    redcarpet (3.6.1)
     regexp_parser (2.11.3)
     reline (0.6.3)
       io-console (~> 0.5)
@@ -437,6 +436,7 @@ GEM
       net-sftp (>= 2.1.2)
       net-ssh (>= 2.8.0)
       ostruct
+    stackprof (0.2.27)
     stimulus-rails (1.3.4)
       railties (>= 6.0.0)
     stringio (3.2.0)
@@ -479,6 +479,7 @@ GEM
     xpath (3.2.0)
       nokogiri (~> 1.8)
     zeitwerk (2.7.4)
+    zip_kit (6.3.4)
 
 PLATFORMS
   aarch64-linux
@@ -519,16 +520,15 @@ DEPENDENCIES
   puma (>= 5.0)
   rack-mini-profiler
   rails!
-  redcarpet
   rouge
   rqrcode
   rubocop-rails-omakase
-  rubyzip
   selenium-webdriver
   solid_cable (>= 3.0)
   solid_cache (~> 1.0)
   solid_queue (~> 1.2)
   sqlite3 (>= 2.0)
+  stackprof
   stimulus-rails
   thruster
   trilogy (~> 2.9)
@@ -538,6 +538,7 @@ DEPENDENCIES
   web-console
   web-push
   webmock
+  zip_kit
 
 BUNDLED WITH
    2.7.2

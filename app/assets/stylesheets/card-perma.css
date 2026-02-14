@@ -68,7 +68,7 @@
 
       @media (max-width: 639px) {
         flex-direction: column;
-        padding-block-end: calc(var(--card-padding-block) * 1.5);
+        padding-block: var(--card-padding-block) calc(var(--card-padding-block) * 1.5);
       }
     }
 
@@ -90,11 +90,23 @@
       }
 
       &:has(textarea) {
-        margin-block-end: 0;
+        @media (min-width: 640px) {
+          margin-block-end: 0;
+        }
 
         @supports not (field-sizing: content) {
           text-wrap: unset; /* Safari is annoying if you have text-wrap: balance in textareas */
         }
+      }
+
+      @media (max-width: 639px) {
+        margin-block-end: 0.75ch;
+      }
+    }
+
+    .card__description {
+      @media (max-width: 639px) {
+        margin-block-end: 1ch;
       }
     }
 
@@ -115,12 +127,12 @@
 
       @media (max-width: 639px) {
         border: 1px solid var(--card-color);
-        border-radius: 0.25em;
+        border-radius: calc(0.2em + 3px);
         flex-direction: row;
         gap: 0;
         overflow: auto;
         max-inline-size: 100%;
-        padding: 0;
+        padding: 3px;
         position: relative;
         white-space: nowrap;
 
@@ -130,7 +142,7 @@
           min-block-size: 2.5em;
         }
 
-        & > form + form:not(:has(.card__column-name--current)) {
+        & > form:not(:has(.card__column-name--current)) + form:not(:has(.card__column-name--current)) {
           box-shadow: -1px 0 0 0 var(--color-container);
         }
       }
@@ -138,7 +150,6 @@
 
     .card__column-name {
       @media (max-width: 639px) {
-        --btn-border-radius: 0;
         justify-content: center;
       }
     }
