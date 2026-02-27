@@ -34,6 +34,16 @@
       }
     }
 
+    @media (max-width: 639px) {
+      &:has(.card__closed) {
+        padding-block-start: 4.5rem;
+
+        .card-perma__bg {
+          box-shadow: 0 -2rem 0 0 var(--color-container);
+        }
+      }
+    }
+
     @media (max-width: 799px) {
       --half-btn-height: 1.25rem;
       --padding-inline: 1.5ch;
@@ -63,12 +73,34 @@
       opacity: 0.2;
     }
 
+    .card__header {
+      @media (max-width: 639px) {
+        flex-wrap: wrap;
+        gap: var(--card-header-space) unset;
+      }
+    }
+
+    .card__tags {
+      @media (max-width: 639px) {
+        padding: 0.25lh;
+      }
+    }
+
+    .card__tags-list {
+      @media (min-width: 640px) {
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+      }
+    }
+
     .card__body {
       position: relative;
 
       @media (max-width: 639px) {
         flex-direction: column;
         padding-block: var(--card-padding-block) calc(var(--card-padding-block) * 1.5);
+        position: static;
       }
     }
 
@@ -120,6 +152,43 @@
     .card__meta {
       grid-area: meta;
       margin-inline-end: auto;
+
+      @media (max-width: 639px) {
+        --meta-spacer-block: 0.75ch;
+
+        inline-size: 100%;
+        grid-template-areas:
+          "avatars-author text-added"
+          "avatars-author text-author"
+          "text-updated text-updated"
+          "text-assignees text-assignees"
+          "avatars-assignees avatars-assignees";
+        grid-template-columns: auto 1fr;
+
+        .card__meta-text {
+          border: 0;
+          padding: 0;
+        }
+
+        .card__meta-text + .card__meta-text {
+          border-block-start: var(--card-border);
+          margin-block-start: var(--meta-spacer-block);
+          padding-block-start: var(--meta-spacer-block);
+        }
+
+        .card__meta-avatars--assignees {
+          margin-inline: 0;
+          margin-block-start: var(--meta-spacer-block);
+        }
+
+        .card__meta-avatars--author {
+          display: initial;
+        }
+
+        .card__meta-avatars--assignees .avatar {
+          display: grid;
+        }
+      }
     }
 
     .card__stages {
@@ -154,6 +223,14 @@
       }
     }
 
+    .card__closed {
+      @media (max-width: 639px) {
+        inset: auto 0 100% auto;
+        translate: 0 30%;
+        scale: 75%;
+      }
+    }
+
     .card__footer {
       --btn-size: 2.5rem;
 
@@ -173,7 +250,12 @@
       }
 
       @media (max-width: 639px) {
+        display: grid;
         font-size: var(--text-x-small);
+        grid-template-columns: 1fr auto;
+        grid-template-areas:
+          "meta bg-zoom"
+          "meta reactions";
       }
     }
 
@@ -200,10 +282,14 @@
           inset: 0 calc(-1 * var(--card-padding-inline)) auto;
           position: absolute;
         }
+
+        @media (any-hover: none) {
+          --reaction-size: 2.25rem;
+        }
       }
 
       &:not(:has(.reaction)) {
-        position: static;
+        margin: 0;
 
         .reactions__trigger {
           --btn-border-color: var(--color-ink-light);
