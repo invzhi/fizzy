@@ -17,7 +17,7 @@ __Query Parameters:__
 | `closer_ids[]` | Filter by user ID(s) who closed the cards |
 | `card_ids[]` | Filter to specific card ID(s) |
 | `column_ids[]` | Filter by workflow column ID(s) |
-| `indexed_by` | Filter by: `all` (default), `closed`, `not_now`, `stalled`, `postponing_soon`, `golden` |
+| `indexed_by` | Filter by: `all` (default), `maybe`, `closed`, `not_now`, `stalled`, `postponing_soon`, `golden` |
 | `sorted_by` | Sort order: `latest` (default), `newest`, `oldest` |
 | `assignment_status` | Filter by assignment status: `unassigned` |
 | `creation` | Filter by creation date: `today`, `yesterday`, `thisweek`, `lastweek`, `thismonth`, `lastmonth`, `thisyear`, `lastyear` |
@@ -250,6 +250,26 @@ Moves a card to "Not Now" status.
 __Response:__
 
 Returns `204 No Content` on success.
+
+## `PUT /:account_slug/cards/:card_number/board`
+
+Moves a card to a different board.
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `board_id` | string | Yes | The ID of the board to move the card to |
+
+__Request:__
+
+```json
+{
+  "board_id": "03f5v9zkft4hj9qq0lsn9ohcm"
+}
+```
+
+__Response:__
+
+Returns `200 OK` with the moved card in the same shape as `GET /:account_slug/cards/:card_number`. The `board` field reflects the new board.
 
 ## `POST /:account_slug/cards/:card_number/triage`
 

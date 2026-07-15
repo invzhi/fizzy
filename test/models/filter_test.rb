@@ -23,6 +23,9 @@ class FilterTest < ActiveSupport::TestCase
     filter = users(:david).filters.new indexed_by: "closed"
     assert_equal [ cards(:shipping) ], filter.cards
 
+    filter = users(:david).filters.new indexed_by: "maybe", board_ids: [ boards(:writebook).id ]
+    assert_equal [ cards(:buy_domain) ], filter.cards
+
     cards(:shipping).postpone
     filter = users(:david).filters.new indexed_by: "not_now"
     assert_includes filter.cards, cards(:shipping)
@@ -43,6 +46,15 @@ class FilterTest < ActiveSupport::TestCase
     boards(:writebook).accesses.revoke_from users(:david)
 
     assert_empty users(:david).filters.new(board_ids: [ boards(:writebook).id ]).boards
+  end
+
+  test "board-scoped cards never leak cards from an inaccessible board in the same account" do
+    inaccessible_card = boards(:private).cards.create!(status: "published", creator: users(:kevin))
+
+    filter = users(:david).filters.new(board_ids: [ boards(:private).id, boards(:writebook).id ])
+
+    assert_not_includes filter.cards, inaccessible_card
+    filter.cards.each { |card| assert_includes users(:david).boards, card.board }
   end
 
   test "remembering equivalent filters" do
